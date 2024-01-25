@@ -1,22 +1,35 @@
+const inputNum = document.querySelector('#controls>input')
+const btnCreate = document.querySelector('button[data-create]')
+const btnDestroy = document.querySelector('button[data-destroy]')
+const boxes = document.querySelector('#boxes')
+
 function getRandomHexColor() {
-  return `#${Math.floor(Math.random() * 16777215)
-    .toString(16)
-    .padStart(6, 0)}`;
+	return `#${Math.floor(Math.random() * 16777215).toString(16)}`
 }
 
-const list = document.querySelector('.gallery')
+const createBoxes = amount => {
+	const elementsToAdd = []
+	for (let i = 0; i < amount; i++) {
+		const div = document.createElement('div')
+		div.style.height = `${30 + 10 * i}px`
+		div.style.width = `${30 + 10 * i}px`
+		div.style.background = getRandomHexColor()
+		elementsToAdd.push(div)
+	}
+	return elementsToAdd
+}
 
-const markup = images
-	.map(image => `<li><img class="picture" src=${image.url} width = '400' alt='${image.alt}'></img></li>`)
-	.join('')
+const destroyBoxes = () => {
+	boxes.innerHTML = ''
+}
 
-  list.insertAdjacentHTML('beforeend', markup)
-    // const img = document.createElement('img')
-  
-const pictures = document.querySelectorAll('.picture')
+btnCreate.addEventListener('click', () => {
+	let boxesToAdd = createBoxes(inputNum.value)
+	boxes.append(...boxesToAdd)
+})
 
-list.style.display = 'flex';
-list.style.flexWrap = 'column-reverse'
-list.style.listStyle = 'none'
-list.style.gap = '20px'
-list.style.justifyContent = 'center'
+console.log(inputNum.value)
+
+btnDestroy.addEventListener('click', () => {
+	destroyBoxes.call()
+})
